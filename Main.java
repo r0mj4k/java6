@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.util.Scanner;
 
 class WrongStudentName extends Exception { }
+class WrongStudentAge extends Exception { }
+class WrongStudentDate extends Exception { }
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
@@ -20,6 +22,10 @@ class Main {
 
             } catch(WrongStudentName e) {
                 System.out.println("Błędne imie studenta!");
+            } catch(WrongStudentAge e) {
+              System.out.println("Błędny wiek studenta!");
+            } catch(WrongStudentDate e ) {
+              System.out.println("Błędna data!");
             }
         }
     }
@@ -42,14 +48,35 @@ class Main {
 
         return name;
     }
-
-    public static void exercise1() throws IOException, WrongStudentName {
-        var name = ReadName();
-        System.out.println("Podaj wiek: ");
-        var age = scan.nextInt();
+  
+  public static int ReadAge() throws WrongStudentAge {
         scan.nextLine();
-        System.out.println("Podaj datę urodzenia DD-MM-YYY");
-        var date = scan.nextLine();
+        System.out.println("Podaj wiek: ");
+        int age = scan.nextInt();
+        if(age < 0 || age >=120)
+            throw new WrongStudentAge();
+
+        return age;
+    }
+  public static String ReadData() throws WrongStudentDate {
+    scan.nextLine();
+    System.out.println("Podaj datę urodzenia DD-MM-YYYY: ");
+    String date = scan.nextLine();
+    String[] dataDate = date.split("-");
+    int dd = Integer.parseInt(dataDate[0]);
+    int mm = Integer.parseInt(dataDate[1]);
+    int yy = Integer.parseInt(dataDate[2]);
+    if(dd<0 || dd>32 || mm<0 || mm>13 || yy<1900 || yy>2023)
+      throw new WrongStudentDate();
+    
+    return date;
+  }
+
+    public static void exercise1() throws IOException, WrongStudentName, WrongStudentAge, WrongStudentDate {
+        var name = ReadName();
+        var age = ReadAge();
+        scan.nextLine();
+        var date = ReadData();
         (new Service()).addStudent(new Student(name, age, date));
     }
 
