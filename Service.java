@@ -16,7 +16,7 @@ public class Service {
         b.close();
     }
 
-    public Collection<Student> getStudents() throws IOException {
+    public Collection<Student> getStudents() throws IOException, WrongStudentParse {
         var ret = new ArrayList<Student>();
         var f = new FileReader("db.txt");
         var reader = new BufferedReader(f);
@@ -31,7 +31,7 @@ public class Service {
         return ret;
     }
 
-    public Student findStudentByName(String name) throws IOException {
+    public Student findStudentByName(String name) throws IOException, WrongStudentParse {
         var students = this.getStudents();
         for(Student current : students) {
             if(current.GetName().equals(name))
