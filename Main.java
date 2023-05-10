@@ -43,6 +43,8 @@ class Main {
         System.out.println("Błędna data!");
       } catch (NumberFormatException e) {
         System.out.println("Wprowadź poprawną liczbę!");
+      } catch (WrongStudentParse e) {
+        System.out.println("Błędny zapis danych studenta!");
       }
     }
   }
@@ -98,7 +100,7 @@ class Main {
     (new Service()).addStudent(new Student(name, age, date));
   }
 
-  public static void exercise2() throws IOException {
+  public static void exercise2() throws IOException, WrongStudentParse {
 
     var students = (new Service()).getStudents();
     for (Student current : students) {
@@ -106,7 +108,7 @@ class Main {
     }
   }
 
-  public static void exercise3() throws IOException {
+  public static void exercise3() throws IOException, WrongStudentParse {
     scan.nextLine();
     System.out.println("Podaj imie: ");
     var name = scan.nextLine();
